@@ -12,7 +12,6 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
-
     /**
      * The attributes that are mass assignable.
      *
@@ -45,5 +44,15 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Relación Muchos a Muchos: Un estudiante puede inscribirse en muchas clases.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function clasesInscritas()
+    {
+        return $this->belongsToMany(Clase::class, 'clase_estudiante', 'user_id', 'clase_id');
     }
 }
